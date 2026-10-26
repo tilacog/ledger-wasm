@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "web/**"
+      - "build-wasm.sh"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+# Allow only one concurrent deployment, cancelling in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: Install wasm-bindgen-cli (pinned to the crate's exact version)
+        run: >
+          cargo install
+          wasm-bindgen-cli@$(grep -m1 '^wasm-bindgen' Cargo.toml | sed -E 's/.*"=([0-9.]+)".*/\1/')
+          --locked
+      - name: Run engine tests
+        run: cargo test --release
+      - name: Build wasm + stage dist/
+        run: ./build-wasm.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

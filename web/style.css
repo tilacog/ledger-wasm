@@ -1,0 +1,165 @@
+:root {
+  --bg: #0d1117;
+  --pane: #161b22;
+  --border: #30363d;
+  --fg: #e6edf3;
+  --muted: #8b949e;
+  --accent: #7c3aed;
+  --accent-soft: #2a1e4a;
+  --green: #3fb950;
+  --red: #f85149;
+  --amber: #d29922;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+header { padding: 1.25rem 1.5rem 0.75rem; }
+h1 { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
+h1 .wasm { color: var(--accent); }
+.tagline { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.9rem; max-width: 60rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+main {
+  display: grid;
+  grid-template-columns: minmax(24rem, 1fr) minmax(24rem, 1fr);
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+@media (max-width: 62rem) { main { grid-template-columns: 1fr; } }
+
+.pane {
+  background: var(--pane);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 30rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.toolbar label { color: var(--muted); font-size: 0.8rem; display: inline-flex; gap: 0.4rem; align-items: center; }
+.toolbar select {
+  background: var(--bg); color: var(--fg); border: 1px solid var(--border);
+  border-radius: 0.3rem; padding: 0.2rem 0.4rem; font-size: 0.8rem;
+}
+.spacer { flex: 1; }
+
+button {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent-soft); border-color: var(--accent); }
+button:disabled { opacity: 0.5; cursor: wait; }
+
+textarea#source {
+  flex: 1;
+  width: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  border: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 22rem;
+  outline: none;
+}
+textarea#source:focus { box-shadow: inset 0 0 0 1px var(--accent); }
+
+.error {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border-top: 1px solid var(--border);
+  color: var(--red);
+  background: rgba(248, 81, 73, 0.08);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  max-height: 12rem;
+  overflow: auto;
+}
+.status {
+  padding: 0.35rem 0.85rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.75rem;
+  min-height: 1.6rem;
+}
+.status.ok { color: var(--green); }
+
+.report-header {
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.report {
+  flex: 1;
+  overflow: auto;
+  padding: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.placeholder { color: var(--muted); padding-top: 4rem; text-align: center; }
+
+/* balance tree */
+.bal-row { display: flex; gap: 0.75rem; padding: 0.1rem 0; white-space: nowrap; }
+.bal-row.parent { color: var(--muted); }
+.bal-row .acct { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.amts { display: flex; gap: 1.25rem; }
+.bal-total {
+  margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed var(--border);
+  display: flex; gap: 0.75rem;
+}
+.bal-total .label { color: var(--muted); flex: 1; }
+.amt.neg { color: var(--red); }
+.amt.pos { color: var(--fg); }
+
+/* register */
+.txn { margin-bottom: 0.9rem; }
+.txn-head { display: flex; gap: 0.6rem; color: var(--muted); }
+.txn-head .date { color: var(--amber); }
+.txn-head .state { color: var(--green); }
+.txn-head .desc { color: var(--fg); flex: 1; }
+.post { display: flex; gap: 0.75rem; padding-left: 1.4rem; }
+.post .acct { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.post .amt { min-width: 8rem; text-align: right; }
+
+/* accounts */
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  border: 1px solid var(--border); border-radius: 1rem;
+  padding: 0.15rem 0.65rem; font-size: 0.75rem;
+}
+
+footer {
+  padding: 0.75rem 1.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}

@@ -1,0 +1,26 @@
+[package]
+name = "ledger-reports-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "ledger CLI in the browser: ledger/hledger/beancount journals parsed and reported by doppio, compiled to WebAssembly"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Reported against doppio's library API (parse -> elaborate -> prost Journal).
+doppio = "2.4.1"
+# Must match wasm-bindgen-cli; build-wasm.sh pins the CLI to the same version.
+wasm-bindgen = "=0.2.117"
+console_error_panic_hook = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde-wasm-bindgen = "0.6"
+chrono = { version = "0.4", default-features = false, features = ["std"] }
+rust_decimal = "1"
+regex = "1"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1

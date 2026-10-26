@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ledger.wasm — ledger CLI in the browser</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📒</text></svg>" />
+</head>
+<body>
+  <header>
+    <h1>ledger<span class="wasm">.wasm</span></h1>
+    <p class="tagline">Plain-text accounting, entirely client-side. Journals are parsed, balanced and
+      reported by <a href="https://github.com/alevy/doppio">doppio</a> compiled to WebAssembly —
+      your data never leaves this tab. No files, no server.</p>
+  </header>
+
+  <main>
+    <section class="pane pane-source">
+      <div class="toolbar">
+        <label>frontend
+          <select id="frontend">
+            <option value="ledger" selected>ledger</option>
+            <option value="hledger">hledger</option>
+            <option value="beancount">beancount (experimental)</option>
+          </select>
+        </label>
+        <span class="spacer"></span>
+        <button id="btn-balance" class="primary" title="ledger bal">bal</button>
+        <button id="btn-register" title="ledger reg">reg</button>
+        <button id="btn-accounts" title="ledger accounts">accounts</button>
+        <button id="btn-sample" title="load the sample journal">sample</button>
+      </div>
+      <textarea id="source" spellcheck="false" placeholder="Paste a ledger journal here…"></textarea>
+      <div id="error" class="error" hidden></div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="pane pane-report">
+      <div class="report-header"><span id="report-title">report</span></div>
+      <div id="report" class="report">
+        <div class="placeholder">Run <code>bal</code>, <code>reg</code> or <code>accounts</code> to see results here.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    MVP demo — ledger/hledger parse + double-entry validation + balance/register reports, via
+    <a href="https://github.com/alevy/doppio">doppio</a> &amp; wasm-bindgen. Reports are computed in Rust
+    with exact decimals (no float drift). Not affiliated with ledger-cli.org.
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

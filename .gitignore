@@ -1,0 +1,6 @@
+# build artifacts
+/target
+# wasm-bindgen output (built by build-wasm.sh / CI)
+/web/pkg
+# pages artifact staging
+/dist
