@@ -18,7 +18,7 @@
   <main>
     <section class="pane pane-source">
       <div class="toolbar">
-        <label>frontend
+        <label>format
           <select id="frontend">
             <option value="ledger" selected>ledger</option>
             <option value="hledger">hledger</option>
@@ -26,9 +26,6 @@
           </select>
         </label>
         <span class="spacer"></span>
-        <button id="btn-balance" class="primary" title="ledger bal">bal</button>
-        <button id="btn-register" title="ledger reg">reg</button>
-        <button id="btn-accounts" title="ledger accounts">accounts</button>
         <button id="btn-sample" title="load the sample journal">sample</button>
       </div>
       <textarea id="source" spellcheck="false" placeholder="Paste a ledger journal here…"></textarea>
@@ -37,7 +34,13 @@
     </section>
 
     <section class="pane pane-report">
-      <div class="report-header"><span id="report-title">report</span></div>
+      <div class="toolbar">
+        <span id="report-title">report</span>
+        <span class="spacer"></span>
+        <button id="btn-balance" class="primary" title="ledger bal">bal</button>
+        <button id="btn-register" title="ledger reg">reg</button>
+        <button id="btn-accounts" title="ledger accounts">accounts</button>
+      </div>
       <div id="report" class="report">
         <div class="placeholder">Run <code>bal</code>, <code>reg</code> or <code>accounts</code> to see results here.</div>
       </div>

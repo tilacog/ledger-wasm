@@ -148,11 +148,11 @@ let engineKey = null; // source+frontend cache key
 
 function getEngine() {
   const source = $("source").value;
-  const frontend = $("frontend").value;
-  const key = frontend + "\u0000" + source;
+  const format = $("frontend").value;
+  const key = format + "\u0000" + source;
   if (engine && engineKey === key) return engine;
   clearError();
-  engine = new Engine(source, frontend); // throws on parse/elaboration error
+  engine = new Engine(source, format); // throws on parse/elaboration error
   engineKey = key;
   return engine;
 }

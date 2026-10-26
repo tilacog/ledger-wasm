@@ -119,6 +119,11 @@ textarea#source:focus { box-shadow: inset 0 0 0 1px var(--accent); }
   font-size: 0.8rem;
   color: var(--muted);
 }
+#report-title {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 .report {
   flex: 1;
   overflow: auto;
